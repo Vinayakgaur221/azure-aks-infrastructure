@@ -1,0 +1,45 @@
+# ==============================================================================
+# Terraform GitIgnore Configuration
+# ==============================================================================
+
+# Compiled / downloaded provider plugins and modules
+**/.terraform/
+.terraform/
+.terraform.lock.hcl
+
+# State files and backups (Must NEVER be committed to Git)
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+*.tfstate.lock.info
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Terraform execution plan files
+*.tfplan
+*.plan
+
+# Override files (local developer overrides)
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# CLI Configuration and local credentials
+.terraformrc
+terraform.rc
+
+# Variable definition files containing secrets/credentials
+*.tfvars
+*.tfvars.json
+
+# Allow example tfvars template for reviewers / HR
+!*.tfvars.example
+
+# OS / Editor specific files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,2 @@
+variable "appg" {}
+variable "pblc" {}

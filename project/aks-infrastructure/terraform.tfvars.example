@@ -1,0 +1,164 @@
+# ==============================================================================
+# Azure AKS Infrastructure - Sample Input Variables Configuration (Example)
+# ==============================================================================
+# NOTE: This file is an example template for HR/interviewers and developers.
+# To use this in your environment:
+# 1. Copy this file: `cp terraform.tfvars.example terraform.tfvars`
+# 2. Replace placeholder subscription IDs, issuer URLs, and region settings.
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. Resource Groups
+# ------------------------------------------------------------------------------
+rgss = {
+  rg1 = {
+    rg_name  = "rg-aks-dev-01"
+    location = "eastus"
+  }
+}
+
+# ------------------------------------------------------------------------------
+# 2. Networking (Virtual Network, Subnets, and NSG)
+# ------------------------------------------------------------------------------
+vnt = {
+  vnet1 = {
+    vnet_name           = "vnet-aks-dev-01"
+    location            = "eastus"
+    resource_group_name = "rg-aks-dev-01"
+    address_space       = ["10.0.0.0/16"]
+    dns_servers         = []
+  }
+}
+
+sbnt = {
+  net1 = {
+    sbnt_name            = "snet-aks-dev-01"
+    resource_group_name  = "rg-aks-dev-01"
+    virtual_network_name = "vnet-aks-dev-01"
+    address_prefixes     = ["10.0.1.0/24"]
+  }
+}
+
+nsgg = {
+  net1 = {
+    nsg_name            = "nsg-aks-dev-01"
+    location            = "eastus"
+    resource_group_name = "rg-aks-dev-01"
+  }
+}
+
+# ------------------------------------------------------------------------------
+# 3. Monitoring (Azure Log Analytics Workspace)
+# ------------------------------------------------------------------------------
+mntr = {
+  law1 = {
+    anws_name           = "law-aks-dev-01"
+    location            = "eastus"
+    resource_group_name = "rg-aks-dev-01"
+    sku_name            = "PerGB2018"
+    retention_in_days   = 30
+  }
+}
+
+# ------------------------------------------------------------------------------
+# 4. Azure Key Vault (Secrets Management)
+# ------------------------------------------------------------------------------
+keyv = {
+  kv1 = {
+    keyvv_name          = "kv-aks-dev-01"
+    location            = "eastus"
+    resource_group_name = "rg-aks-dev-01"
+  }
+}
+
+# ------------------------------------------------------------------------------
+# 5. Azure Kubernetes Service (AKS Cluster)
+# ------------------------------------------------------------------------------
+kbcl = {
+  aks1 = {
+    name                = "aks-dev-01"
+    location            = "eastus"
+    resource_group_name = "rg-aks-dev-01"
+    dns_prefix          = "aksdev01"
+    node_count          = 2
+    vm_size             = "Standard_DS2_v2"
+    vnet_subnet_id      = "/subscriptions/<YOUR_AZURE_SUBSCRIPTION_ID>/resourceGroups/rg-aks-dev-01/providers/Microsoft.Network/virtualNetworks/vnet-aks-dev-01/subnets/snet-aks-dev-01"
+    tags = {
+      Environment = "Dev"
+    }
+  }
+}
+
+# ------------------------------------------------------------------------------
+# 6. Azure Container Registry (ACR)
+# ------------------------------------------------------------------------------
+contrg = {
+  acr1 = {
+    contary_name        = "acrdev01"
+    resource_group_name = "rg-aks-dev-01"
+    location            = "eastus"
+    cont_sku_name       = "Premium"
+    geo_location        = "East US 2"
+  }
+}
+
+# ------------------------------------------------------------------------------
+# 7. Public IP & Application Gateway (Ingress & Load Balancing)
+# ------------------------------------------------------------------------------
+pblc = {
+  pip1 = {
+    public_ip_name      = "pip-aks-dev-01"
+    resource_group_name = "rg-aks-dev-01"
+    location            = "eastus"
+    allocation_method   = "Static"
+  }
+}
+
+appg = {
+  agw1 = {
+    apl_name                       = "agw-aks-dev-01"
+    resource_group_name            = "rg-aks-dev-01"
+    location                       = "eastus"
+    sku_name                       = "Standard_v2"
+    tier                           = "Standard_v2"
+    capacity                       = 2
+    subnet_id                      = "/subscriptions/<YOUR_AZURE_SUBSCRIPTION_ID>/resourceGroups/rg-aks-dev-01/providers/Microsoft.Network/virtualNetworks/vnet-aks-dev-01/subnets/snet-aks-dev-01"
+    frontend_port_name             = "feport"
+    port                           = 80
+    frontend_ip_configuration_name = "feip"
+    backend_address_pool_name      = "beap"
+    http_setting_name              = "be-htst"
+    listener_name                  = "httplstn"
+    request_routing_rule_name      = "rqrt"
+    priority                       = 9
+  }
+}
+
+# ------------------------------------------------------------------------------
+# 8. Managed Identity, Workload Identity & Role Assignments
+# ------------------------------------------------------------------------------
+uai = {
+  id1 = {
+    location            = "eastus"
+    uaasid_name         = "uai-aks-dev-01"
+    resource_group_name = "rg-aks-dev-01"
+  }
+}
+
+fic = {
+  fic1 = {
+    name                 = "fic-aks-dev-01"
+    issuer               = "https://eastus.oic.prod-aks.azure.com/<OIDC_ISSUER_GUID>/"
+    uai_key              = "id1"
+    namespace            = "default"
+    service_account_name = "sa-aks-dev-01"
+  }
+}
+
+ra = {
+  ra1 = {
+    scope                = "/subscriptions/<YOUR_AZURE_SUBSCRIPTION_ID>/resourceGroups/rg-aks-dev-01"
+    role_definition_name = "Network Contributor"
+    uai_key              = "id1"
+  }
+}

@@ -1,0 +1,13 @@
+variable "rgss" {}
+variable "vnt" {}
+variable "sbnt" {}
+variable "nsgg" {}
+variable "mntr" {}
+variable "keyv" {}
+variable "kbcl" {}
+variable "contrg" {}
+variable "appg" {}
+variable "pblc" {}
+variable "uai" {}
+variable "fic" {}
+variable "ra" {}
