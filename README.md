@@ -3,11 +3,9 @@
 [![Terraform](https://img.shields.io/badge/Terraform-1.5%2B-623CE4?logo=terraform&logoColor=white)](https://www.terraform.io/)
 [![Azure](https://img.shields.io/badge/Azure-Cloud-0089D6?logo=microsoft-azure&logoColor=white)](https://azure.microsoft.com/)
 [![Kubernetes](https://img.shields.io/badge/Kubernetes-AKS-326CE5?logo=kubernetes&logoColor=white)](https://kubernetes.io/)
-[![Architecture](https://img.shields.io/badge/Design-Modular%20Architecture-success)](#-project-architecture)
+[![Architecture](https://img.shields.io/badge/Design-Modular%20Architecture-success)](#-architecture-diagram)
 
 > **Welcome!** This project automates the provisioning of a secure, production-ready **Azure Kubernetes Service (AKS)** environment using **Terraform (Infrastructure as Code)**.
->
-> 💡 *Designed so simply that even a 12th-grade student or HR recruiter can easily understand how cloud infrastructure works!*
 
 ---
 
@@ -45,22 +43,22 @@ Instead of clicking hundreds of buttons manually in the Azure Portal, this proje
 
 ```mermaid
 graph TD
-    User([🌍 Internet Users]) -->|HTTP / Port 80| PublicIP[🌐 Public IP]
-    PublicIP --> AGW[🚪 Azure Application Gateway]
+    User["🌍 Internet Users"] -->|HTTP / Port 80| PublicIP["🌐 Public IP"]
+    PublicIP --> AGW["🚪 Azure Application Gateway"]
     
-    subgraph Azure_VNet [Private Virtual Network - 10.0.0.0/16]
-        subgraph Subnet [AKS Subnet - 10.0.1.0/24]
-            AGW -->|Route Traffic| AKS[☸️ Azure Kubernetes Service - AKS]
-            AKS --> Pod1[📦 App Pod 1]
-            AKS --> Pod2[📦 App Pod 2]
+    subgraph Azure_VNet ["Private Virtual Network - 10.0.0.0/16"]
+        subgraph Subnet ["AKS Subnet - 10.0.1.0/24"]
+            AGW -->|Route Traffic| AKS["☸️ Azure Kubernetes Service - AKS"]
+            AKS --> Pod1["📦 App Pod 1"]
+            AKS --> Pod2["📦 App Pod 2"]
         end
-        NSG[🛡️ Network Security Group] -. Filters Traffic .-> Subnet
+        NSG["🛡️ Network Security Group"] -. Filters Traffic .-> Subnet
     end
 
-    AKS -->|Pull Images| ACR[📦 Azure Container Registry - Premium]
-    AKS -->|Fetch Secrets| KV[🔐 Azure Key Vault]
-    AKS -->|Send Metrics & Logs| LAW[📊 Log Analytics Workspace]
-    UAI[🪪 User Assigned Identity & OIDC Federation] -. Passwordless Auth .-> AKS
+    AKS -->|Pull Images| ACR["📦 Azure Container Registry - Premium"]
+    AKS -->|Fetch Secrets| KV["🔐 Azure Key Vault"]
+    AKS -->|Send Metrics & Logs| LAW["📊 Log Analytics Workspace"]
+    UAI["🪪 User Assigned Identity & OIDC Federation"] -. Passwordless Auth .-> AKS
 ```
 
 ---
@@ -163,11 +161,3 @@ When you are done testing, destroy all resources with a single command:
 ```bash
 terraform destroy
 ```
-
----
-
-## 👨‍💻 Author
-
-**Vinayak Gaur**  
-GitHub: [@Vinayakgaur221](https://github.com/Vinayakgaur221)  
-Repository: [azure-aks-infrastructure](https://github.com/Vinayakgaur221/azure-aks-infrastructure)
